@@ -1,6 +1,6 @@
 <?php
 
-$file_emp = 'empresa';//empresa
+$file_emp = 'empresa_nome';//nome da empresa
 
 //
 $conteudoConf = '
@@ -27,17 +27,21 @@ else if($producao == false){
 ';
 
 $arquivo_zipado ='./arquivos.zip';
-$local_descompactar = './'.$file_emp . '/pediucerto/';
+$local_descompactar = './'.$file_emp . '/pediucerto/'; // local a ser descompactado
 
 if(!is_dir($file_emp)){//verifica se não existe pasta
     //caso não exista criar
-    mkdir($file_emp . '/pediucerto/confg', 0777, true);
-    file_put_contents($file_emp . '/pediucerto/confg/conf.php', $conteudoConf);
-
-    UnzipFile($arquivo_zipado, $local_descompactar);//função para descompactar um arquivo zipado
-}else{
+    mkdir($file_emp . '/pediucerto/confg', 0777, true);//cria pasta da empresa já com a pasta config
+    //se precisar criar outras pastas fazer outro mkdir com o caminho da pasta, não esquecer o $file_emp
     
+}else{
+    //condição se já existir a pasta da empresa
+    mkdir($file_emp . '-2/pediucerto/confg', 0777, true);
 }
+
+file_put_contents($file_emp . '/pediucerto/confg/conf.php', $conteudoConf); //cria arquivo conf.php, dentro da pasta conf.php, e grava o conteúdo lá dentro
+
+UnzipFile($arquivo_zipado, $local_descompactar);//função para descompactar um arquivo zipado
 
 function UnzipFile($file_path, $extract_path)
 {
